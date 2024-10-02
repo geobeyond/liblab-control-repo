@@ -38,6 +38,10 @@ jobs:
           node-version: '20'
       - name: Install liblab
         run: npm install -g liblab
+      - name: Get spec
+        run: wget -O spec.json https://demo.pygeoapi.io/stable/openapi?f=json
+      - name: Bundle spec
+        run: liblab bundle spec.json -o bundledSpec.json && npx @redocly/cli bundle bundledSpec.json --remove-unused-components
       - name: Start Build
         run: liblab build --yes
       - name: Create PRs to GitHub repos
